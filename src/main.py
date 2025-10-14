@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
-from src.chatbot_agent import chatbot
+from src.chatbot import chatbot
 from pydantic_ai import Agent
 
 
@@ -29,16 +29,23 @@ async def home():
 
 @app.post("/ask")
 async def ask(request: Request):
-    form_data, json_data = (None, None)
-    try:
-        json_data = await request.json()
-    except:
-        form_data = await request.form()
+
+    form_data = await request.form()
+    prompt = form_data.get('prompt')
+    result = await chatbot.run(prompt)
+
+    return {"form_data": form_data, "prompt": prompt, "ai": result.output}
+
+    # form_data, json_data = (None, None)
+    # try:
+    #     json_data = await request.json()
+    # except:
+    #     form_data = await request.form()
     
-    agent = create_chatbot_agent()
-    result = await agent.run(form_data.get('prompt'))
+    # agent = create_chatbot_agent()
+    # result = await agent.run(form_data.get('prompt'))
     
-    return {"received form data": form_data, "received json data": json_data, "ai": result.output}
+    # return {"received form data": form_data, "received json data": json_data, "ai": result.output}
 
 if __name__ == "__main__":
     uvicorn.run("app:app", host="0.0.0.0", port=7860, reload=True)
