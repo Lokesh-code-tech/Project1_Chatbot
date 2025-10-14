@@ -84,8 +84,7 @@ pygments==2.19.2
 pyperclip==1.11.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.1
-python-multipart==0.0.20
-pywin32==311
+python-multipart>=0.0.20
 pyyaml==6.0.3
 referencing==0.37.0
 requests==2.32.5
