@@ -3,7 +3,6 @@ import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from src.chatbot import chatbot
-from pydantic_ai import Agent
 
 
 app = FastAPI(title="CORS Enabled FastAPI App")
