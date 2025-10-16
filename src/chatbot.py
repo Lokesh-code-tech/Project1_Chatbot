@@ -98,23 +98,17 @@ created_files = {}
 
 @chatbot.tool_plain
 async def create_file(filename: str, content: str, directory: str = ".") -> str:
-    """Create a file with specified content"""
+    """Create a file with specified content (memory only)"""
     global created_files
     
-    file_path = Path(directory) / filename
-    file_path.parent.mkdir(parents=True, exist_ok=True)
-    
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(content)
-    
-    # Store the file content for later retrieval
+    # Store only in memory - no disk write needed
     created_files[filename] = {
-        "path": str(file_path),
+        "path": f"/tmp/generated_files/{filename}",  # Dummy path for compatibility
         "content": content,
         "directory": directory
     }
     
-    return f"File {filename} created successfully at {file_path}"
+    return f"File {filename} created successfully (stored in memory)"
 
 
 @chatbot.tool_plain
@@ -137,25 +131,23 @@ async def create_file_from_data_url(filename: str, data_url: str) -> str:
     mime_type = match.group(1)
     base64_data = match.group(2)
     
-    # Decode base64
-    file_content = base64.b64decode(base64_data)
+    try:
+        # Decode base64
+        file_content = base64.b64decode(base64_data)
+        
+        # Store in memory only - no disk write
+        created_files[filename] = {
+            "path": f"/tmp/generated_files/{filename}",  # Dummy path
+            "content": file_content,  # Store as bytes
+            "directory": ".",
+            "mime_type": mime_type
+        }
+        
+        return f"File {filename} created from data URL ({mime_type})"
     
-    # Save file
-    file_path = Path(filename)
-    file_path.parent.mkdir(parents=True, exist_ok=True)
-    
-    with open(file_path, 'wb') as f:  # Binary mode for images
-        f.write(file_content)
-    
-    # Store in created_files
-    created_files[filename] = {
-        "path": str(file_path),
-        "content": file_content,  # Store as bytes
-        "directory": ".",
-        "mime_type": mime_type
-    }
-    
-    return f"File {filename} created from data URL ({mime_type})"
+    except Exception as e:
+        return f"Error processing {filename}: {str(e)}"
+
 
 
 
