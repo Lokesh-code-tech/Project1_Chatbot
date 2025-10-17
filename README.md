@@ -1,14 +1,18 @@
-<<<<<<< HEAD
----
-title: My FastAPI App
-emoji: 🚀
-colorFrom: blue
-colorTo: green
-sdk: docker
-sdk_version: "1.0"
-app_file: app.py
-pinned: false
----
-=======
-# Project1_Chatbot
->>>>>>> 4a2d3a16d2281df4c08b8353d0b896c67fab1fe9
+# 🤖 AI Web Application Generator
+
+An intelligent FastAPI-based chatbot that automatically generates complete, production-ready static websites from natural language descriptions. Perfect for creating GitHub Pages sites, portfolios, dashboards, and data visualization applications.
+
+![Python](https://img.shields.io/badge/python-3.11-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.104-green)
+![License](https://img.shields.io/badge/license-MIT-blue)
+
+## ✨ Features
+
+- 🎨 **Auto-Generate Complete Websites** - Creates HTML, CSS, JavaScript, and README files
+- 📊 **CSV Data Processing** - Handles data attachments and creates interactive visualizations
+- 🔄 **Multi-Round Editing** - Supports iterative improvements with context retention
+- 🚀 **GitHub Pages Ready** - All generated sites work directly on GitHub Pages
+- 📱 **Mobile Responsive** - Every generated site is mobile-first and responsive
+- 🔐 **Secure API** - Token-based authentication for endpoint access
+- ⚡ **Background Processing** - Async task handling for better performance
+
